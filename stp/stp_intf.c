@@ -432,14 +432,20 @@ INTERFACE_NODE * stp_intf_update_intf_db(netlink_db_t *if_db, uint8_t is_add, bo
         if(!node)
         {
             node = stp_intf_create_intf_node(if_db->ifname, if_db->kif_index);
-            if(!node)
+            if(!node){
+                STP_LOG_DEBUG("stp_intf_create_intf_node doesn`t create node. "
+                              "if_db->ifname \"%s\", if_db->kif_index %d",
+                              if_db->ifname, if_db->kif_index);
                 return NULL;
+            }
 
             /* Update port id */
             if(eth_if)
             {
                 port_id = strtol(((char *)if_db->ifname + STP_ETH_NAME_PREFIX_LEN), NULL, 10);
                 node->port_id = port_id;
+                STP_LOG_DEBUG("port_id = %d", port_id);
+                
                 
                 /* Derive Max Port */
                 if (init_in_prog)
@@ -448,7 +454,11 @@ INTERFACE_NODE * stp_intf_update_intf_db(netlink_db_t *if_db, uint8_t is_add, bo
                     {
                         g_max_stp_port = port_id + (4 - (port_id % 4));
                     }
+                }else{
+                    STP_LOG_DEBUG("init_in_prog is false");
                 }
+            }else{
+                STP_LOG_DEBUG("eth_if is false");
             }
             STP_LOG_INFO("Add Kernel ifindex %d name %s", if_db->kif_index, if_db->ifname);
         }

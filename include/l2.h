@@ -132,7 +132,7 @@ typedef struct MAC_HEADER
 #define STP_BPDU_OFFSET (sizeof(MAC_HEADER) + sizeof(LLC_HEADER))
 #define PVST_BPDU_OFFSET (sizeof(MAC_HEADER) + sizeof(SNAP_HEADER))
 
-#define STP_MAX_PKT_LEN 68
+#define STP_MAX_PKT_LEN 256
 #define VLAN_HEADER_LEN 4    //4 bytes
 
 #endif //__L2_H__

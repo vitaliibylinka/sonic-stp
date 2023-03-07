@@ -37,7 +37,9 @@ int stpd_ipc_init()
     memset(&sa, 0, sizeof(struct sockaddr_un));
     sa.sun_family = AF_UNIX;
     strncpy(sa.sun_path, STPD_SOCK_NAME, sizeof(sa.sun_path) - 1);
-
+    int opt = 1;
+    setsockopt(g_stpd_ipc_handle, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+    
     ret = bind(g_stpd_ipc_handle, (struct sockaddr *)&sa, sizeof(struct sockaddr_un));
     if (ret == -1)
     {

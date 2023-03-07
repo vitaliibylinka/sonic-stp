@@ -18,7 +18,7 @@
 #ifndef __STP_IPC_H__
 #define __STP_IPC_H__
 
-#define STPD_SOCK_NAME "/var/run/stpipc.sock"
+#define STPD_SOCK_NAME "/var/run/sock/stpipc.sock"
 
 typedef enum L2_PROTO_MODE{
     L2_NONE,
